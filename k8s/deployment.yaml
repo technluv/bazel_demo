@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: processor-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: processor-service
+  template:
+    metadata:
+      labels:
+        app: processor-service
+    spec:
+      containers:
+      - name: processor-service
+        image: processor-service:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
